@@ -19,18 +19,20 @@ def calculate_avg(arr):
     return avg, deviation
 
 def main():
+    random.seed()
+
     xs = []
     mincuts = []
     mincuts_deviation = []
     
-    n_vertices = 30
+    n_vertices = 10
     full_n_edges = n_vertices * (n_vertices - 1) // 2
-    for x in [v / 100.0 for v in range(0, 100, 2)]:
+    for x in [v / 100.0 for v in range(0, 105, 5)]:
         ms = []
         
         n_edges = int(n_vertices - 1 + (full_n_edges - n_vertices + 1) * x)
         print(f"{n_edges}/{full_n_edges}")
-        for i in range(10):
+        for i in range(500):
             graph = generate_connected_graph(random.randrange(1, 1000000), n_vertices, n_edges, 1, 1)
 
             mincut = find_mincut(graph)

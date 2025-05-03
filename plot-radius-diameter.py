@@ -27,15 +27,13 @@ def main():
     diameters_deviation = []
 
     n_vertices = 30
-    full_n_edges = n_vertices * (n_vertices - 1) // 2
-    #for n_edges in range(n_vertices - 1, full_n_edges + 1):
-    for x in [v / 100.0 for v in range(0, 100, 2)]:
+    full_n_edges = (n_vertices * (n_vertices - 1)) // 2
+    for x in [v / 100.0 for v in range(0, 102, 2)]:
         rs = []
         ds = []
         
-        n_edges = int(n_vertices - 1 + (full_n_edges - n_vertices + 1) * x)
-        #x = (n_edges - n_vertices + 1) / (n_vertices * (n_vertices - 1) // 2 - n_vertices + 1)
-        print(f"{n_edges}/{full_n_edges}")
+        n_edges = math.ceil(n_vertices - 1 + (full_n_edges - n_vertices + 1) * x)
+        print(x, n_edges, full_n_edges)
         for i in range(100):
             graph = generate_connected_graph(random.randrange(1, 1000000), n_vertices, n_edges, 1, 1)
 
@@ -50,6 +48,10 @@ def main():
         diameters.append(d)
         radiuses_deviation.append(r_d)
         diameters_deviation.append(d_d)
+
+    print(xs)
+    print(radiuses)
+    print(diameters)
 
     plt.plot(xs, radiuses, label="radius")
     plt.plot(xs, diameters, label="diameter")

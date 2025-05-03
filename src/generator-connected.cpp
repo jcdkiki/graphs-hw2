@@ -21,7 +21,7 @@ void generateVertices()
 
 std::vector<int> generateRandomPruferCode()
 {
-    std::vector<int> prufer_code(n_vertices - 2);   
+    std::vector<int> prufer_code(n_vertices - 2);
     for (int i = 0; i < prufer_code.size(); i++) {
         prufer_code[i] = rand() % n_vertices;
     }
@@ -29,9 +29,9 @@ std::vector<int> generateRandomPruferCode()
     return prufer_code;
 }
 
-double getRandomEdgeLength() 
+double getRandomEdgeLength()
 {
-    double range = (edge_max - edge_min); 
+    double range = (edge_max - edge_min);
     return edge_min + (rand() / ((double)RAND_MAX / range));
 }
 
@@ -60,8 +60,8 @@ void generateRandomTree()
         for (int v = 0; v < n_vertices; v++) {
             if (!used[v] && count[v] == 0) {
                 double len = getRandomEdgeLength();
-                adj_list[u].push_back(Edge { v, len });
-                adj_list[v].push_back(Edge { u, len });
+                adj_list[u].push_back(Edge{v, len});
+                adj_list[v].push_back(Edge{u, len});
 
                 used[v] = true;
                 count[u]--;
@@ -77,8 +77,8 @@ void generateRandomTree()
     }
 
     double edge_len = getRandomEdgeLength();
-    adj_list[vertices[0]].push_back( { vertices[1], edge_len });
-    adj_list[vertices[1]].push_back( { vertices[0], edge_len });
+    adj_list[vertices[0]].push_back({vertices[1], edge_len});
+    adj_list[vertices[1]].push_back({vertices[0], edge_len});
 }
 
 bool doesEdgeExist(int edge_start, int edge_end)
@@ -93,7 +93,7 @@ bool doesEdgeExist(int edge_start, int edge_end)
 
 void addRandomEdges(int remaining_edges)
 {
-    for (; remaining_edges != 0; remaining_edges--) {
+    while (remaining_edges--) {
         int start, end;
         do {
             start = rand() % n_vertices;
@@ -103,16 +103,18 @@ void addRandomEdges(int remaining_edges)
         } while (doesEdgeExist(start, end));
 
         double len = getRandomEdgeLength();
-        adj_list[start].push_back({ end, len });
-        adj_list[end].push_back({ start, len });
+        adj_list[start].push_back({end, len});
+        adj_list[end].push_back({start, len});
     }
 }
 
 void readArgs(int argc, char **argv)
 {
-    argc--; argv++;
+    argc--;
+    argv++;
     if (argc != 5) {
-        std::cerr << "usage: measure SEED N_VERTICES N_EDGES EDGE_MIN EDGE_MAX\n";
+        std::cerr
+            << "usage: measure SEED N_VERTICES N_EDGES EDGE_MIN EDGE_MAX\n";
         exit(1);
     }
 

@@ -19,19 +19,9 @@ void generateVertices()
     adj_list.resize(n_vertices);
 }
 
-std::vector<int> generateRandomPruferCode()
+double getRandomEdgeLength()
 {
-    std::vector<int> prufer_code(n_vertices - 2);   
-    for (int i = 0; i < prufer_code.size(); i++) {
-        prufer_code[i] = rand() % n_vertices;
-    }
-
-    return prufer_code;
-}
-
-double getRandomEdgeLength() 
-{
-    double range = (edge_max - edge_min); 
+    double range = (edge_max - edge_min);
     return edge_min + (rand() / ((double)RAND_MAX / range));
 }
 
@@ -68,15 +58,17 @@ void addRandomEdges(int remaining_edges)
         } while (doesEdgeExist(start, end));
 
         double len = getRandomEdgeLength();
-        adj_list[start].push_back({ end, len });
+        adj_list[start].push_back({end, len});
     }
 }
 
 void readArgs(int argc, char **argv)
 {
-    argc--; argv++;
+    argc--;
+    argv++;
     if (argc != 5) {
-        std::cerr << "usage: measure SEED N_VERTICES N_EDGES EDGE_MIN EDGE_MAX\n";
+        std::cerr
+            << "usage: measure SEED N_VERTICES N_EDGES EDGE_MIN EDGE_MAX\n";
         exit(1);
     }
 

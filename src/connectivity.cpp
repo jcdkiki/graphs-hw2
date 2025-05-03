@@ -1,9 +1,8 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
-struct Edge
-{
+struct Edge {
     int v;
     double weight;
 };
@@ -33,9 +32,9 @@ int main()
     int u, v;
     double weight;
     while (std::cin >> u >> v >> weight) {
-        adj_list[u].push_back(Edge { v, weight });
+        adj_list[u].push_back(Edge{v, weight});
     }
-    
+
     for (int i = 0; i < n; i++) {
         if (color[i] == -1) {
             dfs(i);

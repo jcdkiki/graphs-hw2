@@ -1,9 +1,8 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
-struct Edge
-{
+struct Edge {
     int u;
     int v;
     double weight;
@@ -15,14 +14,17 @@ double mincut(int n, std::vector<Edge> edges)
         int idx = rand() % edges.size();
 
         for (auto &e : edges) {
-            if (e.u == edges[idx].u) e.u = edges[idx].v;
-            if (e.v == edges[idx].u) e.v = edges[idx].v;
+            if (e.u == edges[idx].u)
+                e.u = edges[idx].v;
+            if (e.v == edges[idx].u)
+                e.v = edges[idx].v;
         }
 
         edges.erase(edges.begin() + idx);
-        std::remove_if(edges.begin(), edges.end(), [](const Edge &edge) {
-            return edge.u == edge.v;
-        });
+        edges.erase(
+            std::remove_if(edges.begin(), edges.end(),
+                           [](const Edge &edge) { return edge.u == edge.v; }),
+            edges.end());
 
         n--;
     }
@@ -46,16 +48,16 @@ int main(int argc, char **argv)
 
     int n;
     std::cin >> n;
-    std::vector<Edge> edges(n);
-    
+    std::vector<Edge> edges;
+
     int u, v;
     double weight;
     while (std::cin >> u >> v >> weight) {
-        edges.push_back(Edge { u, v, weight });
+        edges.push_back(Edge{u, v, weight});
     }
-    
+
     double best = 10000000.0;
-    for (int i = 0; i < n*n; i++) {
+    for (int i = 0; i < n * n; i++) {
         double res = mincut(n, edges);
         best = std::min(best, res);
     }
